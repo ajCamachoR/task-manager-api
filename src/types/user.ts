@@ -3,6 +3,8 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  resetPasswordToken?: String;
+  resetPasswordExpires?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }

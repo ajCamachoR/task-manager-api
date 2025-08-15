@@ -1,21 +1,27 @@
-/** @format */
-
-// src/index.ts
 import express from "express";
-import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+import taskRoutes from "./routes/task";
+import authRoutes from "./routes/auth";
+import { connectDB } from "./utils/database";
+import { PORT, MONGO_URI } from "./config/config";
 
 const app = express();
+
 app.use(express.json());
 
-// Rutas
-// app.use('/api/tasks', taskRoutes);
-// app.use('/api/auth', authRoutes);
+// Example routes (to be implemented)
+app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
 
-// Conectar base de datos
-mongoose
-  .connect("mongodb://localhost:27017/tasks")
-  .then(() => {
-    console.log("✅ Connected to MongoDB");
-    app.listen(3000, () => console.log("🚀 Server on http://localhost:3000"));
-  })
-  .catch((err) => console.error("❌ DB Error", err));
+// MongoDB connection
+
+connectDB(MONGO_URI).then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
+
+export default app;

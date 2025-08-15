@@ -8,6 +8,12 @@ const taskSchema = new Schema<Task>(
     completed: { type: Boolean, default: false },
     dueDate: { type: Date },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    status: {
+      type: String,
+      enum: ["pending", "in_progress", "completed", "cancelled"],
+      default: "pending",
+      required: true,
+    },
   },
   { timestamps: true },
 );
